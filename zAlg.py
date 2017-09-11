@@ -69,7 +69,7 @@ def exactMatch(p, t):
             #print(zOut[i])
             if zOut[i] == patternLength:
                 #print("bem")
-                match += 1
+                match = match + 1
             else:
                 if zOut[i] > maxMatch:
                     maxMatch += zOut[i]
