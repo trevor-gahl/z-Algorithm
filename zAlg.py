@@ -73,7 +73,7 @@ def exactMatch(p, t):
             else:
                 if zOut[i] > maxMatch:
                     maxMatch += zOut[i]
-    if match > 1:
+    if match > 0:
         maxMatch = patternLength
     return match, maxMatch
 
