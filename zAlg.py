@@ -82,7 +82,7 @@ def main():
     patternList = list(pattern)
     print(sequenceList)
     print(patternList)
-    zValues = zAlg(sequneceList)
+    zValues = zAlg(sequenceList)
     print("Z-values: " + str(zValues))
     #print(zValues)
     matches = exactMatch(patternList, sequenceList)
