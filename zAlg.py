@@ -1,85 +1,22 @@
-#!/bin/bash/python
+#!/bin/bash/python3
 '''
-*************************************************
-***  CSCI-451 Fall 2017 Z-algorithm           ***
-***  Treavor Gahl, David Schwehr, Cas Loftin  ***
-***                                           ***
-***  Utilizing Z-algorithm to search for a    ***
-***  pattern in a string in linear time.      ***
-***  Gets user input for string and pattern,  ***
-***  returns number of matches and length of  ***
-***  longest match.                           ***
-*************************************************
+**********************************************************************************
+***  CSCI-451 Fall 2017 Z-algorithm                                            ***
+***  Treavor Gahl, David Schwehr, Cas Loftin                                   ***
+***                                                                            ***
+***  Adapted from Z-algorithm tutorial by                                      ***
+***     Ivan Yurchenko @ https://ivanyu.me/blog/2013/10/15/z-algorithm/        ***
+***                                                                            ***
+***  Utilizing Z-algorithm to search for a pattern in a string in linear time. ***
+***  Gets user input for string and pattern, returns number of matches and     ***
+***  length of longest match.                                                  ***
+**********************************************************************************
 '''
 
+import sys
 
-def zAlg(s):
-
-    # build an array of z-values
-    Z = [0] * len(s)
-    Z[0] = 0
-
-    # initialize the right and left pointers
-    rt = 0
-    lt = 0
-
-    # If the z box is to the left of your current index, explicitly compare
-    for x in range(1, len(s)):
-        if x > rt:
-            n = 0
-            while n + x < len(s) and s[n] == s[n + x]:
-                n += 1
-            Z[x] = n
-            if n > 0:
-                lt = x
-                rt = x + n + 1
-        else:
-            p = x - lt
-            right_part_len = rt - x + 1
-            # If the length is entirely contained in the z box
-            if Z[p] < right_part_len:
-                Z[x] = Z[p]
-            else:
-                i = rt + 1
-                while i < len(s) and s[i] == s[i - x]:
-                    i += 1
-                Z[x] = i - x
-
-                lt = x
-                rt = i - 1
-    return Z
-
-
-def exactMatch(p, t):
-    patternLength = len(p)
-    # print(patternLength)
-    sentinel = ['$']
-    maxMatch = 0
-    match = 0
-    test = p + sentinel + t
-    print(test)
-    zOut = z_advanced(test)
-    print(zOut)
-    # print(len(zOut))
-    for i in range(len(zOut)):
-        # print(patternLength - 1)
-        if i < patternLength:
-            continue
-        else:
-            # print(zOut[i])
-            if zOut[i] == patternLength:
-                # print("bem")
-                match = match + 1
-            else:
-                if zOut[i] > maxMatch:
-                    maxMatch += zOut[i]
-    if match > 0:
-        maxMatch = patternLength
-    return match, maxMatch
-
-
-def z_advanced(s):
-    """An advanced computation of Z-values of a string."""
+def createZTable(s):
+    ''' createZTable() receives a string and returns a list of Z-values '''
 
     Z = [0] * len(s)
     Z[0] = len(s)
@@ -91,6 +28,7 @@ def z_advanced(s):
         if k > rt:
             # If k is outside the current Z-box, do naive computation.
             n = 0
+
             while n + k < len(s) and s[n] == s[n + k]:
                 n += 1
             Z[k] = n
@@ -99,7 +37,6 @@ def z_advanced(s):
                 rt = k + n - 1
         else:
             # If k is inside the current Z-box, consider two cases.
-
             p = k - lt  # Pair index.
             right_part_len = rt - k + 1
 
@@ -116,21 +53,71 @@ def z_advanced(s):
     return Z
 
 
+def exactMatch(pattern, sequence):
+    ''' exactMatch() receives a list for a pattern and a list for a sequence, 
+        will return number of matches and longest match. Number of matches will
+        be any prefix of pattern found in sequence. Longest match will be the
+        longest prefix of pattern found in sequence. If the longest match equals
+        the length of pattern the entire pattern was found at least once in the sequence. '''
+
+    patternLength = len(pattern)
+    sentinel = ['$']
+    maxMatch = 0
+    match = 0
+    test = pattern + sentinel + sequence
+    zValues = createZTable(test)
+
+    for i in range(len(zValues)):
+        # print(patternLength - 1)
+        if i < patternLength:
+            continue
+        else:
+            # print(zValues[i])
+            if zValues[i] == patternLength:
+                match = match + 1
+            else:
+                if zValues[i] > maxMatch:
+                    maxMatch += zOut[i]
+    if match > 0:
+        maxMatch = patternLength
+
+    return match, maxMatch
+
+
+
 def main():
+    '''
+    if len(sys.argv) < 1:
+        sequence = input("Enter string, S, no spaces: \n")
+        pattern = input("Enter pattern, P, that you want to find matches in string: \n")
+    else:
+        if len(sys.argv) == 1:
+            pass   # need to add file reader here to read in file containing sequence
+    else:
+        print("Pass no arguments to enter string and pattern, or pass one argument for file path to file containing sequence.")
+    '''
     sequence = input("Enter string, S, no spaces: \n")
-    pattern = input(
-        "Enter pattern, P, that you want to find matches in string: \n")
+    pattern = input("Enter pattern, P, that you want to find matches in string: \n")
     sequenceList = list(sequence)
     patternList = list(pattern)
     print(sequenceList)
     print(patternList)
-    zValues = z_advanced(sequenceList)
+    zValues = createZTable(sequenceList)
     print("Z-values: " + str(zValues))
     # print(zValues)
     matches = exactMatch(patternList, sequenceList)
-    print(matches)
-    print("Number of matches: " + str(matches[0]))
-    print("Longest match: " + str(matches[1]))
+    #print(matches)
+    numberOfMatches = matches[0]
+    longestMatch = matches[1]
+    print("Number of matches: " + str(matches))
+    print("Longest match: " + str(longestMatch)
+    # if longest match equals the length of pattern 
+    # then the entire pattern was found in sequence
+    if (longestMatch == len(patternList)):
+        print("Entire pattern found in sequence.")
+    else:
+        pass
+
 
 
 '''
@@ -141,5 +128,6 @@ t2 = ['x', 'a', 'a']
 
 print(exactMatch(t2, t))
 '''
+
 if __name__ == "__main__":
     main()
