@@ -1,0 +1,3 @@
+this is a test for striping whitespace
+and lines from a file
+and append to a string
