@@ -15,6 +15,7 @@
 
 import sys
 
+
 def createZTable(s):
     ''' createZTable() receives a string and returns a list of Z-values '''
 
@@ -54,7 +55,7 @@ def createZTable(s):
 
 
 def exactMatch(pattern, sequence):
-    ''' exactMatch() receives a list for a pattern and a list for a sequence, 
+    ''' exactMatch() receives a list for a pattern and a list for a sequence,
         will return number of matches and longest match. Number of matches will
         be any prefix of pattern found in sequence. Longest match will be the
         longest prefix of pattern found in sequence. If the longest match equals
@@ -84,7 +85,6 @@ def exactMatch(pattern, sequence):
     return match, maxMatch
 
 
-
 def main():
     '''
     if len(sys.argv) < 1:
@@ -97,7 +97,8 @@ def main():
         print("Pass no arguments to enter string and pattern, or pass one argument for file path to file containing sequence.")
     '''
     sequence = input("Enter string, S, no spaces: \n")
-    pattern = input("Enter pattern, P, that you want to find matches in string: \n")
+    pattern = input(
+        "Enter pattern, P, that you want to find matches in string: \n")
     sequenceList = list(sequence)
     patternList = list(pattern)
     print(sequenceList)
@@ -106,18 +107,17 @@ def main():
     print("Z-values: " + str(zValues))
     # print(zValues)
     matches = exactMatch(patternList, sequenceList)
-    #print(matches)
+    # print(matches)
     numberOfMatches = matches[0]
     longestMatch = matches[1]
     print("Number of matches: " + str(matches))
-    print("Longest match: " + str(longestMatch)
-    # if longest match equals the length of pattern 
+    print("Longest match: " + str(longestMatch))
+    # if longest match equals the length of pattern
     # then the entire pattern was found in sequence
     if (longestMatch == len(patternList)):
         print("Entire pattern found in sequence.")
     else:
         pass
-
 
 
 '''
