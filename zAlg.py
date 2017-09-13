@@ -87,18 +87,24 @@ def exactMatch(pattern, sequence):
 
 def main():
     '''
-    if len(sys.argv) < 1:
+    if len(sys.argv) < 2:
         sequence = input("Enter string, S, no spaces: \n")
         pattern = input("Enter pattern, P, that you want to find matches in string: \n")
     else:
-        if len(sys.argv) == 1:
-            pass   # need to add file reader here to read in file containing sequence
-    else:
-        print("Pass no arguments to enter string and pattern, or pass one argument for file path to file containing sequence.")
+        if len(sys.argv) == 2:
+            filename = sys.argv[0]
+            sequence = ''
+            with open(filename, 'r') as f:
+                for line in f:
+                    sequence = sequence + line.strip()
+            print(sequence)
+
+    #else:
+    #    print("Pass no arguments for prompt to enter string and pattern, or pass one argument for file path to file containing sequence.")
     '''
+    #print(sys.argv[1])
     sequence = input("Enter string, S, no spaces: \n")
-    pattern = input(
-        "Enter pattern, P, that you want to find matches in string: \n")
+    pattern = input("Enter pattern, P, that you want to find matches in string: \n")
     sequenceList = list(sequence)
     patternList = list(pattern)
     print(sequenceList)
