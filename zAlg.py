@@ -65,6 +65,7 @@ def exactMatch(pattern, sequence):
         will be counted/incremented. '''
 
     patternLength = len(pattern)
+    #print("pattern length: " + str(patternLength))
     sentinel = ['$']
     maxMatch = 0
     match = 0
