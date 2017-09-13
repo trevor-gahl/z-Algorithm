@@ -97,8 +97,8 @@ def main():
             pattern = input("Enter pattern, P, that you want to find matches in string: \n")
             with open(filename, 'r') as f:
                 for line in f:
-                    sequence = sequence + line.strip()
-            print(sequence)
+                    sequence = sequence + line.replace(' ', "")
+            #print(sequence)
 
    #else:
    #     print("Pass no arguments for prompt to enter string and pattern, or pass one argument for file path to file containing sequence.")
@@ -107,8 +107,8 @@ def main():
     #pattern = input("Enter pattern, P, that you want to find matches in string: \n")
     sequenceList = list(sequence)
     patternList = list(pattern)
-    print(sequenceList)
-    print(patternList)
+    #print(sequenceList)
+    #print(patternList)
     zValues = createZTable(sequenceList)
     print("Z-values: " + str(zValues))
     # print(zValues)
