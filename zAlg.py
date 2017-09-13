@@ -78,7 +78,7 @@ def exactMatch(pattern, sequence):
                 match = match + 1
             else:
                 if zValues[i] > maxMatch:
-                    maxMatch += zOut[i]
+                    maxMatch += zValues[i]
     if match > 0:
         maxMatch = patternLength
 
@@ -110,7 +110,7 @@ def main():
     # print(matches)
     numberOfMatches = matches[0]
     longestMatch = matches[1]
-    print("Number of matches: " + str(matches))
+    print("Number of matches: " + str(numberOfMatches))
     print("Longest match: " + str(longestMatch))
     # if longest match equals the length of pattern
     # then the entire pattern was found in sequence
