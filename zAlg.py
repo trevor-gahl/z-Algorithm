@@ -99,41 +99,21 @@ def main():
                 for line in f:
                     sequence = sequence + line.replace(' ', "")
             #print(sequence)
-
-   #else:
-   #     print("Pass no arguments for prompt to enter string and pattern, or pass one argument for file path to file containing sequence.")
-    #print(sys.argv[1])
-    #sequence = input("Enter string, S, no spaces: \n")
-    #pattern = input("Enter pattern, P, that you want to find matches in string: \n")
+    #else:
+    #    if len(sys.argv) > 2:
+    #        print("Pass no arguments for prompt to enter string and pattern, or pass one argument for file path to file containing sequence.")
+    
     sequenceList = list(sequence)
     patternList = list(pattern)
-    #print(sequenceList)
-    #print(patternList)
     zValues = createZTable(sequenceList)
     print("Z-values: " + str(zValues))
-    # print(zValues)
     matches = exactMatch(patternList, sequenceList)
-    # print(matches)
     numberOfMatches = matches[0]
     longestMatch = matches[1]
     print("Number of matches: " + str(numberOfMatches))
     print("Longest match: " + str(longestMatch))
-    # if longest match equals the length of pattern
-    # then the entire pattern was found in sequence
-    if (longestMatch == len(patternList)):
-        print("Entire pattern found in sequence.")
-    else:
-        pass
 
 
-'''
-t = ['x', 'a', 'a', 'a', 'x', 'a', 'b', 'y']
-testRun = zAlg(t)
-print(testRun)
-t2 = ['x', 'a', 'a']
-
-print(exactMatch(t2, t))
-'''
 
 if __name__ == "__main__":
     main()
