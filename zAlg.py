@@ -8,8 +8,10 @@
 ***     Ivan Yurchenko @ https://ivanyu.me/blog/2013/10/15/z-algorithm/        ***
 ***                                                                            ***
 ***  Utilizing Z-algorithm to search for a pattern in a string in linear time. ***
-***  Gets user input for string and pattern, returns number of matches and     ***
-***  length of longest match.                                                  ***
+***  If passing no command line arguments: user is promted for input for       ***
+***  string and pattern. If you want to use a file with a sequence give the    ***
+***  file path as a command line argument. The program returns number of       ***
+***  matches and length of longest match.                                      ***
 **********************************************************************************
 '''
 
@@ -59,7 +61,8 @@ def exactMatch(pattern, sequence):
         will return number of matches and longest match. Number of matches will
         be any prefix of pattern found in sequence. Longest match will be the
         longest prefix of pattern found in sequence. If the longest match equals
-        the length of pattern the entire pattern was found at least once in the sequence. '''
+        the length of pattern the entire pattern was found and numberOfMatches
+        will be counted/incremented. '''
 
     patternLength = len(pattern)
     sentinel = ['$']
@@ -69,11 +72,9 @@ def exactMatch(pattern, sequence):
     zValues = createZTable(test)
 
     for i in range(len(zValues)):
-        # print(patternLength - 1)
         if i < patternLength:
             continue
         else:
-            # print(zValues[i])
             if zValues[i] == patternLength:
                 match = match + 1
             else:
@@ -88,23 +89,23 @@ def exactMatch(pattern, sequence):
 def main():
     
     if len(sys.argv) < 2:
-        sequence = input("Enter string, S, no spaces: \n")
+        sequence = input("Enter string, S: \n")
         pattern = input("Enter pattern, P, that you want to find matches in string: \n")
+        sequence = sequence.replace(' ', "")
+        pattern = pattern.replace(' ', "")
+    elif len(sys.argv) == 2:
+        filename = sys.argv[1]
+        sequence = ''
+        pattern = input("Enter pattern, P, that you want to find matches in string: \n")
+        pattern = pattern.replace(' ',"")     # strip out any whitespace
+        with open(filename, 'r') as f:        # if passing a file, read file and strip all whitespace and newlines
+            for line in f:
+                sequence = sequence + line.replace(' ', "")
     else:
-        if len(sys.argv) == 2:
-            filename = sys.argv[1]
-            sequence = ''
-            pattern = input("Enter pattern, P, that you want to find matches in string: \n")
-            with open(filename, 'r') as f:
-                for line in f:
-                    sequence = sequence + line.replace(' ', "")
-            #print(sequence)
-    #else:
-    #    if len(sys.argv) > 2:
-    #        print("Pass no arguments for prompt to enter string and pattern, or pass one argument for file path to file containing sequence.")
+        print("Pass no arguments for prompt to enter string and pattern, or pass one argument for file path to file containing sequence.")
     
-    sequenceList = list(sequence)
-    patternList = list(pattern)
+    sequenceList = list(sequence)   # create list to pass to createZTable
+    patternList = list(pattern)     # create list to pass to createZTable
     zValues = createZTable(sequenceList)
     print("Z-values: " + str(zValues))
     matches = exactMatch(patternList, sequenceList)
